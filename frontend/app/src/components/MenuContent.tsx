@@ -6,22 +6,22 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import Stack from '@mui/material/Stack';
 import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
-import AnalyticsRoundedIcon from '@mui/icons-material/AnalyticsRounded';
-import PeopleRoundedIcon from '@mui/icons-material/PeopleRounded';
-import SettingsRoundedIcon from '@mui/icons-material/SettingsRounded';
+import CollectionsIcon from '@mui/icons-material/Collections';
+import ReceiptIcon from '@mui/icons-material/Receipt';
+import ArchiveIcon from '@mui/icons-material/Archive';
 import Divider from '@mui/material/Divider';
 import Tooltip from '@mui/material/Tooltip';
 import { useAuth } from '../ context/AuthContext.tsx';
 
 const mainListItems = [
   { text: 'Home', icon: <HomeRoundedIcon />, link: '/' },
-  { text: 'Archive', icon: <AnalyticsRoundedIcon />, link: '/archive' },
-  { text: 'Collections', icon: <PeopleRoundedIcon />, link: '/collections' },
+  { text: 'Archive', icon: <ArchiveIcon />, link: '/archive' },
+  { text: 'Collections', icon: <CollectionsIcon />, link: '/collections' },
 ];
 
 const secondaryListItems = [
   {
-    text: 'Invoices', icon: <SettingsRoundedIcon />, link: '/invoices', requiredPermission: 'View Invoice',
+    text: 'Invoices', icon: <ReceiptIcon />, link: '/invoices', requiredPermission: 'View Invoice',
   },
 ];
 
