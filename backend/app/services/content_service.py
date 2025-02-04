@@ -132,7 +132,7 @@ async def add_content(data):
     response = await insert_content(cleaned_data)
     collection = await get_collection_by_id(response["collection_id"])
     if not collection["featured_image"]:
-        await update_collection_by_id(id, {"featured_image": response["image_url"]})
+        await update_collection_by_id(response["collection_id"], {"featured_image": response["image_url"]})
     return response
 
 
