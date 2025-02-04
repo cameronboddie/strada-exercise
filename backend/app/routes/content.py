@@ -1,7 +1,7 @@
 from quart import Blueprint, request, jsonify
 
-from backend.app.middleware.authentication import auth_required
-from backend.app.services.content_service import add_content, get_all_content
+from app.middleware.authentication import auth_required
+from app.services.content_service import add_content, get_all_content
 
 content_bp = Blueprint("content", __name__, url_prefix="/content")
 

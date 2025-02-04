@@ -1,6 +1,6 @@
 import re
-from backend.app.exceptions.api import CollectionNotFoundError
-from backend.app.repositories.collections_repo import (
+from app.exceptions.api import CollectionNotFoundError
+from app.repositories.collections_repo import (
     insert_collection,
     fetch_collection_by_id,
     fetch_all_collections,

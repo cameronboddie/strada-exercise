@@ -1,7 +1,6 @@
 from quart import Blueprint, request, jsonify
 
-from backend.app.middleware.authentication import auth_required
-from backend.app.services.admin_service import update_firebase_user
+from app.services.admin_service import update_firebase_user
 
 admin_bp = Blueprint("admin", __name__, url_prefix="/admin")
 

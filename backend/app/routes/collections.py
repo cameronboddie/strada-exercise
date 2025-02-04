@@ -1,8 +1,8 @@
 from quart import jsonify
 from quart import Blueprint, request
 
-from backend.app.middleware.authentication import auth_required
-from backend.app.services.collections_service import (
+from app.middleware.authentication import auth_required
+from app.services.collections_service import (
     add_collection,
     get_collection_by_id,
     get_collections,

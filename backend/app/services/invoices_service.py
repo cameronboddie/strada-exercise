@@ -1,4 +1,4 @@
-from backend.app.repositories.invoices_repo import fetch_all_invoices
+from app.repositories.invoices_repo import fetch_all_invoices
 
 
 async def get_all_invoices():

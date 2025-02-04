@@ -1,7 +1,7 @@
 from firebase_admin import auth
 
-from backend.app.exceptions.api import UserNotVerified, RoleNotFoundError
-from backend.app.repositories.admin_repo import (
+from app.exceptions.api import UserNotVerified, RoleNotFoundError
+from app.repositories.admin_repo import (
     fetch_roles_by_name,
     fetch_roles_permissions,
     fetch_teams_by_name,

@@ -1,8 +1,8 @@
-from backend.app.repositories.content_repo import insert_content, fetch_all_content
+from app.repositories.content_repo import insert_content, fetch_all_content
 import datetime
 import re
 
-from backend.app.services.collections_service import (
+from app.services.collections_service import (
     get_collection_by_id,
     update_collection_by_id,
 )
