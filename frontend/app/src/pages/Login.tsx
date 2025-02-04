@@ -24,7 +24,7 @@ function Login() {
       }}
     >
       <Typography variant="h4" gutterBottom>
-        Login Page
+        Login
       </Typography>
       <Button variant="contained" color="primary" onClick={signInWithGoogle}>
         Sign in with Google
