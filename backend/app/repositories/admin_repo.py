@@ -17,7 +17,6 @@ async def fetch_teams_by_name(teams):
     return result
 
 
-
 async def fetch_roles_permissions(roles):
     if not roles:
         return []

@@ -6,7 +6,7 @@ from backend.app.repositories.collections_repo import (
     fetch_all_collections,
     fetch_sub_collections_by_collection_id,
     fetch_content_by_collection_id,
-    update_collection
+    update_collection,
 )
 
 
@@ -82,11 +82,14 @@ async def get_collection_by_id(id):
         raise CollectionNotFoundError(f"Collection with ID {id} not found.")
     return collection
 
+
 async def get_sub_collections_by_id(id):
     return await fetch_sub_collections_by_collection_id(id)
 
+
 async def get_content_by_collection_id(id):
     return await fetch_content_by_collection_id(id)
+
 
 async def update_collection_by_id(id, data):
     return await update_collection(id, data)

@@ -236,5 +236,6 @@ async def migrate(connection):
         """
     )
 
+
 async def valid_migration(connection):
     return True

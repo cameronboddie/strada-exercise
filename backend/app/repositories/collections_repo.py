@@ -1,5 +1,6 @@
 from quart import g
 
+
 async def insert_collection(collection_data):
     result = await g.connection.fetch_one(
         """
@@ -26,6 +27,7 @@ async def insert_collection(collection_data):
         "parent_id": result["parent_id"],
         "team_id": result["team_id"],
     }
+
 
 async def fetch_all_collections():
     result = await g.connection.fetch_all(
@@ -56,10 +58,11 @@ async def fetch_all_collections():
             "parent_id": row["parent_id"],
             "team_id": row["team_id"],
             "team_name": row["team_name"],
-            "created_at": row["created_at"]
+            "created_at": row["created_at"],
         }
         for row in result
     ]
+
 
 async def fetch_collection_by_id(id):
     result = await g.connection.fetch_one(
@@ -88,6 +91,7 @@ async def fetch_collection_by_id(id):
         "team_name": result["team_name"],
     }
 
+
 async def fetch_sub_collections_by_collection_id(id):
     results = await g.connection.fetch_all(
         """
@@ -109,7 +113,7 @@ async def fetch_sub_collections_by_collection_id(id):
             "tags": row["tags"].split(", ") if row["tags"] else [],
             "parent_id": row["parent_id"],
             "team_id": row["team_id"],
-            "created_at": row["created_at"]
+            "created_at": row["created_at"],
         }
         for row in results
     ]
@@ -145,10 +149,11 @@ async def fetch_content_by_collection_id(id):
             "edition_number": row["edition_number"],
             "description": row["description"],
             "collection_id": row["collection_id"],
-            "created_at": row["created_at"]
+            "created_at": row["created_at"],
         }
         for row in results
     ]
+
 
 async def update_collection(id, data):
     existing_collection = await g.connection.fetch_one(
@@ -167,7 +172,11 @@ async def update_collection(id, data):
 
     # Handle special cases (tags should be stored as a comma-separated string)
     if "tags" in update_data:
-        update_data["tags"] = ", ".join(update_data["tags"]) if isinstance(update_data["tags"], list) else update_data["tags"]
+        update_data["tags"] = (
+            ", ".join(update_data["tags"])
+            if isinstance(update_data["tags"], list)
+            else update_data["tags"]
+        )
 
     # Construct SQL query dynamically
     update_fields = ", ".join([f"{key} = ?" for key in update_data.keys()])

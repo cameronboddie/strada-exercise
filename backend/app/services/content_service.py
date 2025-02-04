@@ -2,7 +2,10 @@ from backend.app.repositories.content_repo import insert_content, fetch_all_cont
 import datetime
 import re
 
-from backend.app.services.collections_service import get_collection_by_id, update_collection_by_id
+from backend.app.services.collections_service import (
+    get_collection_by_id,
+    update_collection_by_id,
+)
 
 VALID_DIMENSIONS_UNITS = {"Inches", "Centimeters"}
 VALID_CONDITIONS = {"Undamaged", "Damaged"}
@@ -127,9 +130,9 @@ async def add_content(data):
     if errors:
         return {"errors": errors}, 400
     response = await insert_content(cleaned_data)
-    collection = await get_collection_by_id(response['collection_id'])
-    if not collection['featured_image']:
-        await update_collection_by_id(id, {'featured_image': response['image_url']})
+    collection = await get_collection_by_id(response["collection_id"])
+    if not collection["featured_image"]:
+        await update_collection_by_id(id, {"featured_image": response["image_url"]})
     return response
 
 

@@ -46,6 +46,7 @@ async def insert_content(content_data):
         "collection_id": result["collection_id"],
     }
 
+
 async def fetch_all_content():
     results = await g.connection.fetch_all(
         """
@@ -82,7 +83,7 @@ async def fetch_all_content():
             "collection_name": row["collection_name"],
             "team_id": row["team_id"],
             "team_name": row["team_name"],
-            "created_at": row["created_at"]
+            "created_at": row["created_at"],
         }
         for row in results
     ]

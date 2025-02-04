@@ -5,6 +5,7 @@ from backend.app.services.invoices_service import get_all_invoices
 
 invoices_bp = Blueprint("invoices", __name__, url_prefix="/invoices")
 
+
 @invoices_bp.route("/", methods=["GET"])
 @auth_required
 async def get_invoices():

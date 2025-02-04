@@ -5,12 +5,14 @@ from backend.app.services.content_service import add_content, get_all_content
 
 content_bp = Blueprint("content", __name__, url_prefix="/content")
 
+
 @content_bp.route("/", methods=["POST"])
 @auth_required
 async def create_content():
     data = await request.json
     response = await add_content(data)
     return response
+
 
 @content_bp.route("/", methods=["GET"])
 @auth_required
