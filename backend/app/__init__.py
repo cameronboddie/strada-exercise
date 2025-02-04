@@ -1,4 +1,3 @@
-# app/__init__.py
 import base64
 import json
 
