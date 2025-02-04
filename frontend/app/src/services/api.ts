@@ -26,7 +26,7 @@ export const api = createApi({
   endpoints: (builder) => ({
     getCollections: builder.query<Collection[], void>({
       query: () => '/collections/',
-      providesTags: ['Collection'],
+      providesTags: [{ type: 'Collection', id: 'LIST' }],
     }),
 
     getCollection: builder.query<Collection, number>({
@@ -51,23 +51,24 @@ export const api = createApi({
         method: 'POST',
         body: newCollection,
       }),
-      invalidatesTags: ['Collection'],
+      invalidatesTags: [{ type: 'Collection', id: 'LIST' }],
     }),
-    updateCollection: builder.mutation<Collection, { collectionId: number;
-      newCollection: Partial<NewCollection> }>({
-        query: ({ collectionId, newCollection }) => ({
-          url: `/collections/${collectionId}`,
-          method: 'PATCH', // Use PATCH for partial updates
-          body: newCollection,
-        }),
-        invalidatesTags: ['Collection'], // Ensures cache is updated
+
+    updateCollection: builder.mutation<Collection, { collectionId: number; newCollection: Partial<NewCollection> }>({
+      query: ({ collectionId, newCollection }) => ({
+        url: `/collections/${collectionId}`,
+        method: 'PATCH',
+        body: newCollection,
       }),
+      // @ts-ignore
+      invalidatesTags: (result, error, { collectionId }) => [{ type: 'Collection', id: collectionId }, { type: 'Collection', id: 'LIST' }],
+    }),
     getContent: builder.query<Content[], void>({
       query: () => ({
         url: '/content/',
         method: 'GET',
       }),
-      providesTags: ['Content'],
+      providesTags: [{type: 'Content', id: 'LIST'}],
     }),
 
     createContent: builder.mutation<Content, NewContent>({
@@ -76,7 +77,8 @@ export const api = createApi({
         method: 'POST',
         body: newContent,
       }),
-      invalidatesTags: ['Content'],
+      // @ts-ignore
+      invalidatesTags: (result, error, { collection_id }) => [{ type: 'Collection', id: collection_id }],
     }),
     getInvoices: builder.query<Invoice[], void>({
       query: () => ({

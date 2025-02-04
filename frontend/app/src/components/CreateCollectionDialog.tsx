@@ -11,6 +11,7 @@ import {
 } from '@mui/material';
 import { useCreateCollectionMutation } from '../services/api.ts';
 import {useView} from "../ context/ViewContext.tsx";
+import {useNavigate} from "react-router-dom";
 
 type CreateCollectionDialogProps = {
   open: boolean;
@@ -39,6 +40,7 @@ export default function CreateCollectionDialog({ open, onClose }: CreateCollecti
     },
   });
   const { selectedTeam } = useView()
+  const navigate = useNavigate()
 
   // RTK Query mutation hook for creating a new collection
   const [createCollection, { isLoading, error: mutationError }] = useCreateCollectionMutation();
@@ -66,7 +68,8 @@ export default function CreateCollectionDialog({ open, onClose }: CreateCollecti
       const result = await createCollection(payload).unwrap();
       console.log('Created collection:', result);
       reset(); // Clear form after successful submission
-      onClose(); // Close dialog
+      onClose();// Close dialog
+      navigate(`collections/${result.id}`)
     } catch (err) {
       console.error('Failed to create collection:', err);
       // The error object (err) may include backend validation errors in err.data
