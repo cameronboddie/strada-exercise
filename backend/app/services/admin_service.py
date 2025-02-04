@@ -35,15 +35,16 @@ async def update_firebase_user(data):
 
     if teams:
         await validate_set_user_team_data(teams)
+        teams = await fetch_teams_by_name(teams)
 
     auth.set_custom_user_claims(
-        user.uid, {"roles": roles, "teams": teams, "permissions": permissions}
+        user.uid, {"roles": roles if roles else [], "teams": teams if teams else [], "permissions": permissions}
     )
 
     return {
         "message": f"User {user_email} updated successfully.",
         "user_id": user.uid,
-        "roles": roles,
+        "roles": roles if roles else [],
         "permissions": permissions,
-        "teams": teams,
+        "teams": teams if teams else [],
     }
