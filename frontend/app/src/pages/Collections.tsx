@@ -33,7 +33,7 @@ export default function Collections() {
   };
 
   const handleDropAttempt = () => {
-    if (!includeSubcollections) {
+    if (includeSubcollections) {
       setSnackbarOpen(true);
     }
   };
@@ -100,7 +100,7 @@ export default function Collections() {
         </Box>
 
         {/* Snackbar Notification */}
-        <Snackbar open={snackbarOpen} autoHideDuration={3000} onClose={() => setSnackbarOpen(false)}>
+        <Snackbar anchorOrigin={{'vertical': 'bottom', 'horizontal': 'right'}} open={snackbarOpen} autoHideDuration={3000} onClose={() => setSnackbarOpen(false)}>
           <Alert onClose={() => setSnackbarOpen(false)} severity="warning">
             Drag-and-drop is not allowed in the subcollection view.
           </Alert>
