@@ -6,6 +6,8 @@ import Select, { SelectChangeEvent, selectClasses } from '@mui/material/Select';
 import { styled } from '@mui/material/styles';
 import GroupWorkRoundedIcon from '@mui/icons-material/GroupWorkRounded';
 import { useView } from '../ context/ViewContext.tsx';
+import type {} from '@mui/material/themeCssVarsAugmentation';
+
 
 const Avatar = styled(MuiAvatar)(({ theme }) => ({
   width: 28,
@@ -24,7 +26,7 @@ export default function SelectTeam() {
   const { teams, setSelectedTeam, selectedTeam } = useView();
 
   const handleChange = (event: SelectChangeEvent<string>) => {
-    const selected = teams.find((team) => team === event.target.value);
+    const selected = teams.find((team) => team.id === event.target.value);
     if (selected) {
       setSelectedTeam(selected);
     }
@@ -34,7 +36,7 @@ export default function SelectTeam() {
     <Select
       labelId="team-select"
       id="team-simple-select"
-      value={selectedTeam || ''}
+      value={selectedTeam?.id || ''}
       onChange={handleChange}
       displayEmpty
       inputProps={{ 'aria-label': 'Select team' }}
@@ -60,13 +62,13 @@ export default function SelectTeam() {
       ) : (
         teams.map((team) => (
 
-          <MenuItem key={team} value={team}>
+          <MenuItem key={team.id} value={team.id}>
             <ListItemAvatar>
-              <Avatar alt={team}>
+              <Avatar alt={team.name}>
                 <GroupWorkRoundedIcon sx={{ fontSize: '1rem' }} />
               </Avatar>
             </ListItemAvatar>
-            <ListItemText primary={String(team).charAt(0).toUpperCase() + String(team).slice(1)} />
+            <ListItemText primary={String(team.name).charAt(0).toUpperCase() + String(team.name).slice(1)} />
           </MenuItem>
         ))
       )}

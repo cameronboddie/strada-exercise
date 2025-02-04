@@ -30,7 +30,7 @@ export default function Collections() {
   };
 
   let filteredCollections = fetchedCollections?.filter(
-    (col) => !selectedTeam || col.team_name.toLowerCase() === selectedTeam.toLowerCase(),
+    (col) => !selectedTeam || col.team_id === selectedTeam.id,
   ) || [];
 
   if (!includeSubcollections) {

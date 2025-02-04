@@ -19,13 +19,12 @@ export default function Archive() {
   const isArtwork = searchParams.get('artwork') === 'true';
   const { data: content, isLoading } = useGetContentQuery();
 
-  // Filter images based on medium type
   const contentImages = content
-    ?.filter((c) => c.medium === 'Photography' && c.team_name.toLocaleLowerCase() === selectedTeam?.toLocaleLowerCase())
+    ?.filter((c) => c.medium === 'Photography' && c.team_id === selectedTeam?.id)
     .map((c) => c.image_url);
 
   const artworkImages = content
-    ?.filter((c) => c.medium === 'Art' && c.team_name.toLocaleLowerCase() === selectedTeam?.toLocaleLowerCase())
+    ?.filter((c) => c.medium === 'Art' && c.team_id === selectedTeam?.id)
     .map((c) => c.image_url);
 
   const handleToggle = (event: React.ChangeEvent<HTMLInputElement>) => {

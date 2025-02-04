@@ -4,6 +4,7 @@ import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import SideMenu from './SideMenu.tsx';
 import Header from './Header.tsx';
+import type {} from '@mui/material/themeCssVarsAugmentation';
 
 export default function Layout() {
   return (

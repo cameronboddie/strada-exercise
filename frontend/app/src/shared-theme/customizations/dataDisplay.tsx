@@ -5,6 +5,8 @@ import { buttonBaseClasses } from '@mui/material/ButtonBase';
 import { chipClasses } from '@mui/material/Chip';
 import { iconButtonClasses } from '@mui/material/IconButton';
 import { gray, red, green } from '../themePrimitives';
+import type {} from '@mui/material/themeCssVarsAugmentation';
+
 
 export const dataDisplayCustomizations: Components<Theme> = {
   MuiList: {

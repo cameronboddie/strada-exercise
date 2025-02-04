@@ -6,13 +6,11 @@ import {
   DialogActions,
   Button,
   TextField,
-  MenuItem,
-  Select,
   FormControl,
-  InputLabel,
   Typography,
 } from '@mui/material';
 import { useCreateCollectionMutation } from '../services/api.ts';
+import {useView} from "../ context/ViewContext.tsx";
 
 type CreateCollectionDialogProps = {
   open: boolean;
@@ -40,6 +38,7 @@ export default function CreateCollectionDialog({ open, onClose }: CreateCollecti
       tags: '',
     },
   });
+  const { selectedTeam } = useView()
 
   // RTK Query mutation hook for creating a new collection
   const [createCollection, { isLoading, error: mutationError }] = useCreateCollectionMutation();
@@ -57,7 +56,8 @@ export default function CreateCollectionDialog({ open, onClose }: CreateCollecti
     const payload = {
       name: data.collectionName,
       description: data.description,
-      assigned_teams: data.team ? [data.team] : [],
+      // @ts-ignore
+      team_id: selectedTeam.id,
       tags: parsedTags,
     };
 
@@ -126,29 +126,6 @@ export default function CreateCollectionDialog({ open, onClose }: CreateCollecti
               )}
             />
           </FormControl>
-
-          {/* Assign to Team Dropdown */}
-          <FormControl fullWidth sx={{ marginTop: 2 }}>
-            <InputLabel shrink>Assign to Team *</InputLabel>
-            <Controller
-              name="team"
-              control={control}
-              rules={{ required: 'Team selection is required' }}
-              render={({ field }) => (
-                <Select {...field} label="Assign to Team *" error={!!errors.team}>
-                  <MenuItem value="team1">Team 1</MenuItem>
-                  <MenuItem value="team2">Team 2</MenuItem>
-                  <MenuItem value="team3">Team 3</MenuItem>
-                </Select>
-              )}
-            />
-            {errors.team && (
-              <Typography variant="caption" color="error">
-                {errors.team.message}
-              </Typography>
-            )}
-          </FormControl>
-
           {/* Tags Input */}
           <FormControl fullWidth sx={{ marginTop: 2 }}>
             <Controller

@@ -31,14 +31,17 @@ export const api = createApi({
 
     getCollection: builder.query<Collection, number>({
       query: (collectionId) => `/collections/${collectionId}`,
+      // @ts-ignore
       providesTags: (result, error, id) => [{ type: 'Collection', id }],
     }),
     getContentByCollectionId: builder.query<Content[], number>({
       query: (collectionId) => `/collections/${collectionId}/content`,
+      // @ts-ignore
       providesTags: (result, error, id) => [{ type: 'Collection', id }],
     }),
     getSubCollections: builder.query<Collection[], number>({
       query: (collectionId) => `/collections/${collectionId}/collections`,
+      // @ts-ignore
       providesTags: (result, error, id) => [{ type: 'Collection', id }],
     }),
 

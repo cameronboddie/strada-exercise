@@ -33,12 +33,12 @@ export default function Dashboard() {
   } = useGetInvoicesQuery();
 
   const filteredCollections = collections?.filter(
-    (collection) => collection.team_name.toLocaleLowerCase() === selectedTeam?.toLocaleLowerCase(),
+    (collection) => collection.team_id === selectedTeam?.id,
   ) || [];
   const recentCollections = filteredCollections.slice(0, 3);
 
   const filteredContent = content?.filter(
-    (item) => item.team_name.toLocaleLowerCase() === selectedTeam?.toLocaleLowerCase(),
+    (item) => item.team_id === selectedTeam?.id,
   ) || [];
   const recentArtwork = filteredContent
     .filter((item) => item.medium === 'Art')
@@ -57,7 +57,7 @@ export default function Dashboard() {
           <DashboardCard linkTitle="Collections" link="/collections">
             <Typography component="h2" variant="h6" sx={{ mb: 2 }}>
               Collections (
-              {String(selectedTeam).charAt(0).toUpperCase() + String(selectedTeam).slice(1) || 'No Team Selected'}
+              {String(selectedTeam?.name).charAt(0).toUpperCase() + String(selectedTeam?.name).slice(1) || 'No Team Selected'}
               )
             </Typography>
             <Box sx={{

@@ -5,39 +5,47 @@ import { onAuthStateChanged } from 'firebase/auth';
 import { useAuth } from './AuthContext.tsx';
 import { auth } from '../firebase/firebase.ts';
 
+export interface Team {
+  id: string;
+  name: string;
+}
+
 interface ViewContextType {
-  teams: string[];
-  selectedTeam: string | null;
-  setSelectedTeam: (team: string | null) => void;
+  teams: Team[];
+  selectedTeam: Team | null;
+  setSelectedTeam: (team: Team | null) => void;
 }
 
 const ViewContext = createContext<ViewContextType | undefined>(undefined);
 
 export const ViewProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const { user } = useAuth();
-  const [teams, setTeams] = useState<string[]>([]);
-  const [selectedTeam, setSelectedTeam] = useState<string | null>(
-    () => localStorage.getItem('selectedTeam'), // Retrieve from storage on first render
-  );
+  const [teams, setTeams] = useState<Team[]>([]);
+  const [selectedTeam, setSelectedTeam] = useState<Team | null>(() => {
+    const storedTeam = localStorage.getItem('selectedTeam');
+    return storedTeam ? JSON.parse(storedTeam) : null;
+  });
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
       if (firebaseUser) {
         try {
           const idTokenResult = await firebaseUser.getIdTokenResult();
-          const userTeams = (idTokenResult.claims.teams as string[]) || [];
+          const userTeams = (idTokenResult.claims.teams as { id: string; name: string }[]) || [];
 
           if (Array.isArray(userTeams)) {
             setTeams(userTeams);
 
-            // Restore selected team from storage if valid, otherwise set first team
+            // Retrieve selected team from localStorage and validate it
             const storedTeam = localStorage.getItem('selectedTeam');
-            if (storedTeam && userTeams.includes(storedTeam)) {
-              setSelectedTeam(storedTeam);
+            const parsedStoredTeam: Team | null = storedTeam ? JSON.parse(storedTeam) : null;
+
+            if (parsedStoredTeam && userTeams.some(team => team.id === parsedStoredTeam.id)) {
+              setSelectedTeam(parsedStoredTeam);
             } else {
               const defaultTeam = userTeams.length > 0 ? userTeams[0] : null;
               setSelectedTeam(defaultTeam);
-              localStorage.setItem('selectedTeam', defaultTeam ?? '');
+              localStorage.setItem('selectedTeam', JSON.stringify(defaultTeam));
             }
           } else {
             setTeams([]);
@@ -64,14 +72,16 @@ export const ViewProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   // Sync state to localStorage whenever selectedTeam changes
   useEffect(() => {
     if (selectedTeam) {
-      localStorage.setItem('selectedTeam', selectedTeam);
+      localStorage.setItem('selectedTeam', JSON.stringify(selectedTeam));
+    } else {
+      localStorage.removeItem('selectedTeam');
     }
   }, [selectedTeam]);
 
   return (
-    <ViewContext.Provider value={{ teams, selectedTeam, setSelectedTeam }}>
-      {children}
-    </ViewContext.Provider>
+      <ViewContext.Provider value={{ teams, selectedTeam, setSelectedTeam }}>
+        {children}
+      </ViewContext.Provider>
   );
 };
 
