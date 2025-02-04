@@ -1,0 +1,44 @@
+/* Reset default browser styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Make sure html and body take up full screen */
+html, body {
+  height: 100%;
+  width: 100%;
+  overflow: auto;
+  font-family: 'Roboto', sans-serif; /* MUI default font */
+  background-color: #f5f5f5; /* Light gray background (optional) */
+}
+
+/* Ensure root container takes full height */
+#root {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100%;
+}
+
+/* Main app container */
+.app-container {
+  flex: 1; /* Makes content take up remaining space */
+  display: flex;
+  flex-direction: column;
+  overflow: auto; /* Allows scrolling if needed */
+}
+
+/* Ensure MUI components fit properly */
+.MuiContainer-root {
+  max-width: 100%;
+}
+
+/* Optional: If using a footer */
+.footer {
+  padding: 16px;
+  text-align: center;
+  background-color: white;
+  border-top: 1px solid #ddd;
+}
