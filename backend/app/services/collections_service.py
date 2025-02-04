@@ -40,13 +40,11 @@ def validate_collection_data(data):
                 else:
                     cleaned_data["featured_image"] = featured_image
 
-    if "assigned_teams" in data:
-        if not isinstance(data["assigned_teams"], list) or not all(
-            isinstance(team, str) for team in data["assigned_teams"]
-        ):
-            errors.append("Assigned teams must be a list of strings.")
+    if "team_id" in data:
+        if not data["team_id"]:
+            errors.append("team_id required")
         else:
-            cleaned_data["assigned_teams"] = data["assigned_teams"]
+            cleaned_data["team_id"] = data["team_id"]
 
     if "tags" in data:
         if not isinstance(data["tags"], list) or not all(
