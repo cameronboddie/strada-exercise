@@ -202,7 +202,9 @@ async def migrate(connection):
           ('Artwork Title 6', 'Artist 6', 'Art', 2020,
               'https://i.pinimg.com/736x/12/2b/eb/122bebc31ef7860132b35e9d4fdb9e85.jpg', 1),
         ('Artwork Title 7', 'Artist 6', 'Art', 2020,
-              'https://i.pinimg.com/736x/86/96/0a/86960ab6b750beccf2d669adc13e817c.jpg', 1);
+              'https://i.pinimg.com/736x/86/96/0a/86960ab6b750beccf2d669adc13e817c.jpg', 1),
+        ('Artwork Title 8', 'Artist 7', 'Art', 2020,
+              'https://static01.nyt.com/images/2017/05/18/arts/19basquiat_web1/18BASQUIAT-superJumbo.jpg', 3);
         """
     )
 
@@ -231,7 +233,9 @@ async def migrate(connection):
         ('Photography Title 10', 'Bond', 'Photography', 2020,
               'https://i.pinimg.com/736x/d2/f6/3e/d2f63ef35898aecbc725c28f8b7065ba.jpg', 5),
         ('Photography Title 11', 'Bond', 'Photography', 2020,
-              'https://i.pinimg.com/736x/fa/97/39/fa9739b69b434461d1f862cd41de1156.jpg', 5);
+              'https://i.pinimg.com/736x/fa/97/39/fa9739b69b434461d1f862cd41de1156.jpg', 5),
+        ('Photography Title 11', 'Bond', 'Photography', 2020,
+              'https://i.pinimg.com/736x/b8/1f/8f/b81f8fe782c1e62304dbb39ee4a4ca90.jpg', 4);
             
         """
     )
