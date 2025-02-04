@@ -68,7 +68,7 @@ export default function CollectionDetail() {
             {collection.description}
           </Typography>
         </Box>
-        {hasSubcollections || hasContent && (
+        {(hasSubcollections || hasContent) && (
           <Button variant="contained" color="primary" onClick={() => setOpen(true)}>
             Create Content
           </Button>
