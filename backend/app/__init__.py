@@ -1,4 +1,7 @@
 # app/__init__.py
+import base64
+import json
+
 import firebase_admin
 from firebase_admin import credentials
 from quart import Quart
@@ -27,9 +30,13 @@ def create_app():
 
     db = QuartDB(app, url="sqlite:memory:")
     db.init_app(app)
+    firebase_key_base64 = app.config["PATH_TO_FIRE_BASE_ADMIN_KEY"]
 
-    # Load service account key (download from Firebase Console)
-    cred = credentials.Certificate(app.config["PATH_TO_FIRE_BASE_ADMIN_KEY"])
+    firebase_key_json = base64.b64decode(firebase_key_base64).decode("utf-8")
+    firebase_key_dict = json.loads(firebase_key_json)
+
+    cred = credentials.Certificate(firebase_key_dict)
+    firebase_admin.initialize_app(cred)
 
     # Initialize Firebase Admin SDK (ensure it's only initialized once)
     if not firebase_admin._apps:
