@@ -78,7 +78,7 @@ export const api = createApi({
         body: newContent,
       }),
       // @ts-ignore
-      invalidatesTags: (result, error, { collection_id }) => [{ type: 'Collection', id: collection_id }],
+      invalidatesTags: (result, error, { collection_id }) => [{ type: 'Collection', id: collection_id }, { type: 'Collection', id: 'LIST' }],
     }),
     getInvoices: builder.query<Invoice[], void>({
       query: () => ({

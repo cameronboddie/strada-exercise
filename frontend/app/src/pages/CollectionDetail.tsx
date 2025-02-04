@@ -56,99 +56,107 @@ export default function CollectionDetail() {
   const hasContent = content && content.length > 0;
 
   return (
-    <Box sx={{ p: 3 }}>
-      {/* Header Section with Name, Description & Button on Opposite Ends */}
-      <Box sx={{
-        display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 2,
-      }}
+      <Box
+          sx={{
+            width: '100vw',
+            maxWidth: '100%',
+            minHeight: '100vh',
+            overflowX: 'hidden',
+            p: 3,
+          }}
       >
-        <Box>
-          <Typography variant="h4">{collection.name}</Typography>
-          <Typography variant="body1" sx={{ color: 'text.secondary' }}>
-            {collection.description}
-          </Typography>
+        {/* Header Section with Name, Description & Button on Opposite Ends */}
+        <Box sx={{
+          display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 2,
+        }}
+        >
+          <Box>
+            <Typography variant="h4">{collection.name}</Typography>
+            <Typography variant="body1" sx={{ color: 'text.secondary' }}>
+              {collection.description}
+            </Typography>
+          </Box>
+          {(hasSubcollections || hasContent) && (
+              <Button variant="contained" color="primary" onClick={() => setOpen(true)}>
+                Create Content
+              </Button>
+          )}
         </Box>
-        {(hasSubcollections || hasContent) && (
-          <Button variant="contained" color="primary" onClick={() => setOpen(true)}>
-            Create Content
-          </Button>
+
+        <CreateContentDialog open={open} onClose={() => setOpen(false)} collectionId={collectionId} />
+
+        {!hasSubcollections && !hasContent ? (
+            <Box
+                display="flex"
+                justifyContent="center"
+                alignItems="center"
+                height="50vh"
+                flexDirection="column"
+            >
+              <Typography variant="body1" sx={{ mb: 2, color: 'text.secondary' }}>
+                No content or subcollections available. Start by adding content!
+              </Typography>
+              <Button variant="contained" color="primary" onClick={() => setOpen(true)}>
+                Create Content
+              </Button>
+            </Box>
+        ) : (
+            <>
+              {/* Subcollections Section */}
+              <Typography variant="h5" sx={{ mt: 4, mb: 2 }}>Subcollections</Typography>
+              <Grid container spacing={2}>
+                {hasSubcollections ? (
+                    subcollections.map((sub) => (
+                        <Grid size={{ xs: 12, sm: 6, lg: 3 }} key={sub.id}>
+                          <Box
+                              sx={{ cursor: 'pointer' }}
+                              onClick={() => navigate(`/collections/${sub.id}`)}
+                          >
+                            <CollectionCard
+                                id={sub.id.toString()}
+                                title={sub.name}
+                                description={sub.description}
+                                imageUrl={sub.featured_image || undefined}
+                            />
+                          </Box>
+                        </Grid>
+                    ))
+                ) : (
+                    <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+                      No subcollections found.
+                    </Typography>
+                )}
+              </Grid>
+
+              <Divider sx={{ my: 4 }} />
+
+              {/* Content Section */}
+              <Typography variant="h5" sx={{ mb: 2 }}>Content</Typography>
+              <Grid container spacing={2}>
+                {hasContent ? (
+                    content.map((item) => (
+                        <Grid size={{ xs: 6, sm: 4, md: 3 }} key={item.id}>
+                          <Box
+                              component="img"
+                              src={item.image_url}
+                              alt={`Gallery ${item.id}`}
+                              sx={{
+                                width: '100%',
+                                aspectRatio: '1 / 1',
+                                objectFit: 'cover',
+                                borderRadius: 2,
+                              }}
+                          />
+                        </Grid>
+                    ))
+                ) : (
+                    <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+                      No content available in this collection.
+                    </Typography>
+                )}
+              </Grid>
+            </>
         )}
       </Box>
-
-      <CreateContentDialog open={open} onClose={() => setOpen(false)} collectionId={collectionId} />
-
-      {!hasSubcollections && !hasContent ? (
-        <Box
-          display="flex"
-          justifyContent="center"
-          alignItems="center"
-          height="50vh"
-          flexDirection="column"
-        >
-          <Typography variant="body1" sx={{ mb: 2, color: 'text.secondary' }}>
-            No content or subcollections available. Start by adding content!
-          </Typography>
-          <Button variant="contained" color="primary" onClick={() => setOpen(true)}>
-            Create Content
-          </Button>
-        </Box>
-      ) : (
-        <>
-          {/* Subcollections Section */}
-          <Typography variant="h5" sx={{ mt: 4, mb: 2 }}>Subcollections</Typography>
-          <Grid container spacing={2}>
-            {hasSubcollections ? (
-              subcollections.map((sub) => (
-                <Grid size={{ xs: 12, sm: 6, lg: 3 }} key={sub.id}>
-                  <Box
-                    sx={{ cursor: 'pointer' }}
-                    onClick={() => navigate(`/collections/${sub.id}`)} // Navigate to subcollection
-                  >
-                    <CollectionCard
-                      id={sub.id.toString()}
-                      title={sub.name}
-                      description={sub.description}
-                      imageUrl={sub.featured_image || undefined}
-                    />
-                  </Box>
-                </Grid>
-              ))
-            ) : (
-              <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                No subcollections found.
-              </Typography>
-            )}
-          </Grid>
-
-          <Divider sx={{ my: 4 }} />
-
-          {/* Content Section */}
-          <Typography variant="h5" sx={{ mb: 2 }}>Content</Typography>
-          <Grid container spacing={2}>
-            {hasContent ? (
-              content.map((item) => (
-                <Grid size={{ xs: 6, sm: 4, md: 3 }} key={item.id}>
-                  <Box
-                    component="img"
-                    src={item.image_url}
-                    alt={`Gallery ${item.id}`}
-                    sx={{
-                      width: '100%',
-                      aspectRatio: '1 / 1',
-                      objectFit: 'cover',
-                      borderRadius: 2,
-                    }}
-                  />
-                </Grid>
-              ))
-            ) : (
-              <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                No content available in this collection.
-              </Typography>
-            )}
-          </Grid>
-        </>
-      )}
-    </Box>
   );
 }
